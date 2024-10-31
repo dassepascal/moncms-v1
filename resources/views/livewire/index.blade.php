@@ -51,6 +51,7 @@ new class extends Component {
 
     <div class="mb-4 mary-table-pagination">
         <div class="mb-5 border border-t-0 border-x-0 border-b-1 border-b-base-300"></div>
+   
         {{ $posts->links() }}
     </div>
 

@@ -2,10 +2,11 @@
 
 namespace App\Repositories;
 
+use Exception;
+
 use App\Models\{Category, Post};
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Exception;
 
 class PostRepository
 {
@@ -46,4 +47,9 @@ class PostRepository
             ->with('user:id,name', 'category')
             ->whereActive(true);
     }
+    public function getPostBySlug(string $slug): Post
+    {
+        return Post::with('user:id,name', 'category')->whereSlug($slug)->firstOrFail();
+    }
+
 }

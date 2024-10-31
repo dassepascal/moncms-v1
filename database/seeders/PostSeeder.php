@@ -24,6 +24,12 @@ class PostSeeder extends Seeder
         $this->createPost(7, 1);
         $this->createPost(8, rand(1, $nbrCategories));
         $this->createPost(9, rand(1, $nbrCategories));
+      
+
+        
+
+        
+
     }
 
     protected function createPost($id, $category_id)
