@@ -37,6 +37,8 @@ new class extends Component {
                 <x-button label="{{ __('Login') }}" link="/login" class="btn-ghost" />
             @endif
         </span>
-         <x-theme-toggle title="{{ __('Toggle theme') }}" class="w-4 h-8" />
+         
+          <x-theme-toggle title="{{ __('Toggle theme') }}" class="w-4 h-8" />
+        <livewire:search />
     </x-slot:actions>
 </x-nav>

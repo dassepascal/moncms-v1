@@ -52,4 +52,15 @@ class PostRepository
         return Post::with('user:id,name', 'category')->whereSlug($slug)->firstOrFail();
     }
 
+    public function search(string $search): LengthAwarePaginator
+    {
+        return $this->getBaseQuery()
+        ->latest()
+        ->where(function ($query) use ($search) {
+            $query->where('body', 'like', "%{$search}%")->orWhere('title', 'like', "%{$search}%");
+        })
+            ->paginate(config('app.pagination'));
+    }
+    
+
 }

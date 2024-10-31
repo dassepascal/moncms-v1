@@ -48,7 +48,6 @@
     "You are receiving this email because we received a password reset request for your account.": "Vous recevez cet e-mail car nous avons reçu une demande de réinitialisation de mot de passe pour votre compte.",
     "Password": "Mot de passe",
     "Confirm Password": "Confirmation du mot de passe",
-  
     "Already registered?": "Déjà enregistré ?",
     "Name": "Nom",
     "E-mail": "Courriel",
@@ -63,5 +62,8 @@
     "Read": "Lire",
     "Nothing to show !": "Rien à montrer !",
     "No Post found with these criteria": "Aucun article trouvé avec ces critères",
-    "By ": "Par "
+    "By ": "Par",
+    "Posts for search": "Articles pour la recherche ",
+    "Search": "Rechercher"
+    
 }

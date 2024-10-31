@@ -10,48 +10,52 @@ new class extends Component {
     use WithPagination;
 
     public ?Category $category = null;
+    public string $param = '';
 
-    public function mount(string $slug = ''): void
-	{
-        //dd('mounted',$slug);
-		if (request()->is('category/*')) {
-			$this->category = $this->getCategoryBySlug($slug);
-		} 
-       // dd('mounted',$this->category);
-	}
-
-	public function getPosts(): LengthAwarePaginator
-	{
-        
-		$postRepository = new PostRepository();
-
-		return $postRepository->getPostsPaginate($this->category);
-	}
-
-    protected function getCategoryBySlug(string $slug): ?Category
-	{
-        //dd('getCategoryBySlug');
-		return 'category' === request()->segment(1) ? Category::whereSlug($slug)->firstOrFail() : null;
-	}
-
-
-    public function with(): array
-	{
-        //dd('with');
-		return ['posts' => $this->getPosts()];
+    public function mount(string $slug = '', string $param = ''): void
+    {
+        $this->param = $param;
+        if (request()->is('category/*')) {
+            $this->category = $this->getCategoryBySlug($slug);
+        }
+       
     }
 
+    public function getPosts(): LengthAwarePaginator
+    {
+        $postRepository = new PostRepository();
+
+        if (!empty($this->param)) {
+            return $postRepository->search($this->param);
+        }
+        return $postRepository->getPostsPaginate($this->category);
+    }
+
+    protected function getCategoryBySlug(string $slug): ?Category
+    {
+        
+        return 'category' === request()->segment(1) ? Category::whereSlug($slug)->firstOrFail() : null;
+    }
+
+    public function with(): array
+    {
+        
+        return ['posts' => $this->getPosts()];
+    }
 }; ?>
 
 <div class="relative grid items-center w-full py-5 mx-auto md:px-12 max-w-7xl">
 
     @if ($category)
-        <x-header title="{{ __('Posts for category ') }} {{ $category->title }}" size="text-2xl sm:text-3xl md:text-4xl" />
+        <x-header title="{{ __('Posts for category ') }} {{ $category->title }}"
+            size="text-2xl sm:text-3xl md:text-4xl" />
+            @elseif ($param !== '')
+                <x-header title="{{ __('Posts for search') }} {{ $param }}" size="text-2xl sm:text-3xl md:text-4xl" />
     @endif
 
     <div class="mb-4 mary-table-pagination">
         <div class="mb-5 border border-t-0 border-x-0 border-b-1 border-b-base-300"></div>
-   
+
         {{ $posts->links() }}
     </div>
 
@@ -61,7 +65,7 @@ new class extends Component {
                 <x-card
                     class="w-full transition duration-500 ease-in-out shadow-md shadow-gray-500 hover:shadow-xl hover:shadow-gray-500"
                     title="{!! $post->title !!}">
-    
+
                     <div class="text-justify">{!! str(strip_tags($post->excerpt))->words(config('app.excerptSize')) !!}</div>
                     <br>
                     <hr>
@@ -69,32 +73,34 @@ new class extends Component {
                         <p wire:click="" class="text-left cursor-pointer">{{ $post->user->name }}</p>
                         <p class="text-right"><em>{{ $post->created_at->isoFormat('LL') }}</em></p>
                     </div>
-                    @if($post->image)
+                    @if ($post->image)
                         <x-slot:figure>
                             <a href="{{ url('/posts/' . $post->slug) }}">
                                 <img src="{{ asset('storage/photos/' . $post->image) }}" alt="{{ $post->title }}" />
                             </a>
                         </x-slot:figure>
                     @endif
-    
+
                     <x-slot:menu>
                         @if ($post->pinned)
                             <x-badge value="{{ __('Pinned') }}" class="p-3 badge-warning" />
                         @endif
                     </x-slot:menu>
-    
+
                     <x-slot:actions>
-                        <div class="flex flex-col items-end space-y-2 sm:items-start sm:flex-row sm:space-y-0 sm:space-x-2">
+                        <div
+                            class="flex flex-col items-end space-y-2 sm:items-start sm:flex-row sm:space-y-0 sm:space-x-2">
                             <x-popover>
                                 <x-slot:trigger>
                                     <x-button label="{{ $post->category->title }}"
-                                        link="{{ url('/category/' . $post->category->slug) }}" class="mt-1 btn-outline btn-sm" />
+                                        link="{{ url('/category/' . $post->category->slug) }}"
+                                        class="mt-1 btn-outline btn-sm" />
                                 </x-slot:trigger>
                                 <x-slot:content class="pop-small">
                                     @lang('Show this category')
                                 </x-slot:content>
                             </x-popover>
-        
+
                             <x-popover>
                                 <x-slot:trigger>
                                     <x-button label="{{ __('Read') }}" link="{{ url('/posts/' . $post->slug) }}"
@@ -116,7 +122,7 @@ new class extends Component {
             @endforelse
         </div>
     </div>
-    
+
 
     <!-- Pagination inférieure -->
     <div class="mb-4 mary-table-pagination">
