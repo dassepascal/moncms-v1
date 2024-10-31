@@ -2,9 +2,16 @@
 
 use Illuminate\Support\Facades\{Auth, Session};
 use Livewire\Volt\Component;
+use Illuminate\Support\Collection;
 
 new class extends Component {
 
+     public Collection $menus;
+
+    public function mount(Collection $menus): void
+    {
+        $this->menus = $menus;
+    }
     public function logout(): void
     {
         Auth::guard('web')->logout();
@@ -36,6 +43,22 @@ new class extends Component {
             @else
                 <x-button label="{{ __('Login') }}" link="/login" class="btn-ghost" />
             @endif
+            @foreach ($menus as $menu)
+            @if ($menu->submenus->isNotEmpty())
+                <x-dropdown>
+                    <x-slot:trigger>
+                        <x-button label="{{ $menu->label }}" class="btn-ghost" />
+                    </x-slot:trigger>
+                    @foreach ($menu->submenus as $submenu)
+                        <x-menu-item title="{{ $submenu->label }}" link="{{ $submenu->link }}"
+                            style="min-width: max-content; bg-red-500" />
+                    @endforeach
+                </x-dropdown>
+            @else
+                <x-button label="{{ $menu->label }}" link="{{ $menu->link }}" :external="Str::startsWith($menu->link, 'http')"
+                    class="btn-ghost" />
+            @endif
+        @endforeach
         </span>
          
           <x-theme-toggle title="{{ __('Toggle theme') }}" class="w-4 h-8" />
