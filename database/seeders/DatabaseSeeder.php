@@ -25,7 +25,9 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             CategorySeeder::class,
             PostSeeder::class,  
-            PageSeeder::class          
+            PageSeeder::class,
+            FooterSeeder::class,
+            MenusSeeder::class          
         ]);
     }
     }
