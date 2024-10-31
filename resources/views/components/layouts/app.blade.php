@@ -48,6 +48,10 @@
         </x-slot:content>
 
     </x-main>
+     {{-- FOOTER --}}
+    <hr><br>
+    <livewire:navigation.footer />
+    <br
 
     {{--  TOAST area --}}
     <x-toast />
