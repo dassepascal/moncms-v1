@@ -9,18 +9,25 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="min-h-screen font-sans antialiased bg-base-200/50 dark:bg-base-200">
+     {{-- HERO --}}
+    <div class="min-h-[35vw] hero" style="background-image: url({{ asset('storage/hero.jpg') }});">
+        <div class="bg-opacity-60 hero-overlay"></div>
+        <a href="{{ '/' }}">
+            <div class="text-center hero-content text-neutral-content">
+                <div>
+                    <h1 class="mb-5 text-4xl font-bold sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl">
+                        Mon Titre
+                    </h1>
+                    <p class="mb-5 text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl">
+                        Mon sous-tire
+                    </p>
+                </div>                
+            </div>
+        </a>
+    </div>
 
-    {{-- NAVBAR mobile only --}}
-    <x-nav sticky class="lg:hidden">
-        <x-slot:brand>
-            <x-app-brand />
-        </x-slot:brand>
-        <x-slot:actions>
-            <label for="main-drawer" class="lg:hidden me-3">
-                <x-icon name="o-bars-3" class="cursor-pointer" />
-            </label>
-        </x-slot:actions>
-    </x-nav>
+   {{-- NAVBAR --}}
+<livewire:navigation.navbar  />
 
     {{-- MAIN --}}
     <x-main full-width>
