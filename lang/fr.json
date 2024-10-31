@@ -45,5 +45,13 @@
     "Unauthorized": "Non autorisé",
     "Verify Email Address": "Vérifier l'adresse e-mail",
     "Whoops!": "Oups !",
-    "You are receiving this email because we received a password reset request for your account.": "Vous recevez cet e-mail car nous avons reçu une demande de réinitialisation de mot de passe pour votre compte."
+    "You are receiving this email because we received a password reset request for your account.": "Vous recevez cet e-mail car nous avons reçu une demande de réinitialisation de mot de passe pour votre compte.",
+    "Password": "Mot de passe",
+    "Confirm Password": "Confirmation du mot de passe",
+  
+    "Already registered?": "Déjà enregistré ?",
+    "Name": "Nom",
+    "E-mail": "Courriel",
+    "Forgot your password?": "Mot de passe oublié ?",
+    "Remember me": "Se rappeler de moi"
 }
