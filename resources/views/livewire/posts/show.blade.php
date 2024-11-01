@@ -3,11 +3,11 @@
 use App\Models\Post;
 use App\Repositories\PostRepository;
 use Livewire\Volt\Component;
+use Illuminate\Support\Collection;
 
 new class extends Component {
-
     public Post $post;
-      public int $commentsCount;
+    public int $commentsCount;
 
     public function mount($slug): void
     {
@@ -15,11 +15,33 @@ new class extends Component {
         $this->post = $postRepository->getPostBySlug($slug);
         $this->commentsCount = $this->post->valid_comments_count;
     }
+    public function showComments(): void
+    {
+        $this->listComments = true;
+
+        $this->comments = $this->post
+       
+            ->validComments()
+            ->where('parent_id', null)
+            ->withCount([
+                'children' => function ($query) {
+                    $query->whereHas('user', function ($q) {
+                        $q->where('valid', true);
+                    });
+                },
+            ])
+           
+            ->with([
+                'user' => function ($query) {
+                    $query->select('id', 'name', 'email', 'role')->withCount('comments');
+                },
+            ])
+             
+            ->latest()
+            ->get();
+           
+    }
    
-
-
-  
-
 }; ?>
 
 
@@ -29,7 +51,7 @@ new class extends Component {
     @section('keywords', $post->meta_keywords)
 
     <div id="top" class="flex justify-end gap-4 ">
-        
+
         <x-popover>
             <x-slot:trigger>
                 <x-button class="btn-sm"><a
@@ -53,10 +75,11 @@ new class extends Component {
             {!! $post->body !!}
         </div>
     </div>
+
     <br>
     <hr>
-    
-  <div class="flex justify-between">
+
+    <div class="flex justify-between">
         <p>@lang('By ') {{ $post->user->name }}</p>
         <em>
             @if ($commentsCount > 0)
@@ -70,12 +93,11 @@ new class extends Component {
     <div id="bottom" class="relative items-center w-full py-5 mx-auto md:px-12 max-w-7xl">
         @if ($commentsCount > 0)
             <div class="flex justify-center">
-                <x-button label="{{ $commentsCount > 1 ? __('View comments') : __('View comment') }}" class="btn-outline" spinner />
+                <x-button label="{{ $commentsCount > 1 ? __('View comments') : __('View comment') }}"
+                    class="btn-outline" spinner />
             </div>
         @endif
     </div>
 
 </div>
 </div>
-
-

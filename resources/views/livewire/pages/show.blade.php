@@ -5,8 +5,6 @@ use Livewire\Volt\Component;
 
 new class extends Component {
     public Page $page;
-   
-   
 
     public function mount(Page $page): void
     {
@@ -57,8 +55,10 @@ new class extends Component {
     <div id="bottom" class="relative items-center w-full py-5 mx-auto md:px-12 max-w-7xl">
         @if ($commentsCount > 0)
             <div class="flex justify-center">
-                <x-button label="{{ $commentsCount > 1 ? __('View comments') : __('View comment') }}" class="btn-outline" spinner />
+                <x-button label="{{ $commentsCount > 1 ? __('View comments') : __('View comment') }}"
+                    wire:click="showComments" class="btn-outline" spinner />
             </div>
         @endif
     </div>
+    
 </div>
