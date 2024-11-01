@@ -23,8 +23,14 @@ class PostRepository
 
     public function getPostBySlug(string $slug): Post
     {
+        $userId = auth()->id();
         return Post::with('user:id,name', 'category')
         ->withCount('validComments')
+            ->withExists([
+                'favoritedByUsers as is_favorited' => function ($query) use ($userId) {
+                    $query->where('user_id', $userId);
+                },
+            ])
         ->whereSlug($slug)->firstOrFail();
     }
 
