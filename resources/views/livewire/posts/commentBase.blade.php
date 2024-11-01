@@ -67,6 +67,9 @@ new class() extends Component {
 		$this->message = '';
 	}
 }; ?>
+
+
+
 <div class="flex flex-col mt-4">
     @if ($this->comment)
 

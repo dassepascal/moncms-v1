@@ -81,6 +81,12 @@
     "Comments": "Commentaires",
     "Modify": "Modifier",
     "1 comment": "1 commentaire",
-    "comments": "commentaires"
-    
+    "comments": "commentaires",
+    "Answer" : "Répondre",
+    "delete" : "supprimer",
+    "cancel" : "annuler",
+    "Edit" : "Modifier",
+    "Delete" : "Supprimer",
+    "Show the answers" : "Voir la résponse",
+    "Save" : "Enregistrer"
 }
