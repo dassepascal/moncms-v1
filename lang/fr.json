@@ -68,6 +68,19 @@
     "Edit this page": "Modifier cette page",
     "Number of comments: ": "Nombre de commentaires : ",
     "View comments": "Voir les commentaires",
-    "No comments": "Aucun commentaire"
+    "No comments": "Aucun commentaire",
+    "A comment has been created on your post": "Un commentaire a été ajouté à votre article",
+    "This comment is awaiting moderation.": "Ce commentaire est en attente de modération.",
+    "Manage this comment": "Gérer ce commentaire",
+    "This is your first comment": "C'est votre premier commentaire",
+    "It will be validate by an administrator before it appears here": "Il sera valide par un administrateur avant qu'il ne soit affiché ici",
+    "Leave a comment": "Laissez un commentaire",
+    "Your comment": "Votre commentaire",
+    "Update your comment": "Modifier votre commentaire",
+    "Are you sure to delete this comment?": "Etes-vous sûr de vouloir supprimer ce commentaire ?",
+    "Comments": "Commentaires",
+    "Modify": "Modifier",
+    "1 comment": "1 commentaire",
+    "comments": "commentaires"
     
 }
