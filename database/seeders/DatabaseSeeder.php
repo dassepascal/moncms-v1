@@ -8,6 +8,7 @@ use Illuminate\Database\Seeder;
 use Database\Seeders\PageSeeder;
 use Database\Seeders\PostSeeder;
 use Database\Seeders\UserSeeder;
+use Database\Seeders\CommentSeeder;
 use Database\Seeders\CategorySeeder;
 
 class DatabaseSeeder extends Seeder
@@ -27,7 +28,8 @@ class DatabaseSeeder extends Seeder
             PostSeeder::class,  
             PageSeeder::class,
             FooterSeeder::class,
-            MenusSeeder::class          
+            MenusSeeder::class ,
+            CommentSeeder ::class,        
         ]);
     }
     }

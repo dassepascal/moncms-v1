@@ -3,10 +3,10 @@
 namespace App\Repositories;
 
 use Exception;
-
 use App\Models\{Category, Post};
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
+
 
 class PostRepository
 {
@@ -19,6 +19,13 @@ class PostRepository
         }
 
         return $query->paginate(config('app.pagination'));
+    }
+
+    public function getPostBySlug(string $slug): Post
+    {
+        return Post::with('user:id,name', 'category')
+        ->withCount('validComments')
+        ->whereSlug($slug)->firstOrFail();
     }
 
     protected function getBaseQuery(): Builder
@@ -47,10 +54,7 @@ class PostRepository
             ->with('user:id,name', 'category')
             ->whereActive(true);
     }
-    public function getPostBySlug(string $slug): Post
-    {
-        return Post::with('user:id,name', 'category')->whereSlug($slug)->firstOrFail();
-    }
+   
 
     public function search(string $search): LengthAwarePaginator
     {
