@@ -32,6 +32,7 @@ new class() extends Component {
                         <x-button icon="o-power" wire:click="logout" class="btn-circle btn-ghost btn-xs" tooltip-left="{{ __('Logout') }}" no-wire-navigate />
                     </x-slot:actions>
                 </x-list-item>
+                <x-menu-item title="{{ __('Profile') }}" icon="o-user" link="{{ route('profile') }}" />
             <x-menu-separator />
         @else
             <x-menu-item title="{{ __('Login') }}" link="/login" />
