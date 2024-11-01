@@ -3,7 +3,7 @@
 namespace App\Repositories;
 
 use Exception;
-use App\Models\{Category, Post};
+use App\Models\{Category, Post,user};
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -82,6 +82,15 @@ class PostRepository
         })
             ->paginate(config('app.pagination'));
     }
-    
+
+    public function getFavoritePosts(User $user): LengthAwarePaginator
+    {
+        return $this->getBaseQuery()
+        ->whereHas('favoritedByUsers', function (Builder $query) {
+            $query->where('user_id', auth()->id());
+        })
+            ->latest()
+            ->paginate(config('app.pagination'));
+    }
 
 }

@@ -11,18 +11,26 @@ new class extends Component {
 
     public ?Category $category = null;
     public string $param = '';
+    public bool $favorites     = false;
 
     public function mount(string $slug = '', string $param = ''): void
     {
         $this->param = $param;
         if (request()->is('category/*')) {
             $this->category = $this->getCategoryBySlug($slug);
+        }elseif (request()->is('favorite')) {
+            $this->favorites = true;
+            # code...
         }
     }
 
     public function getPosts(): LengthAwarePaginator
     {
         $postRepository = new PostRepository();
+         if ($this->favorites) {
+        return $postRepository->getFavoritePosts(auth()->user());
+    }       
+    return $postRepository->getPostsPaginate($this->category);
 
         if (!empty($this->param)) {
             return $postRepository->search($this->param);
@@ -48,6 +56,8 @@ new class extends Component {
             size="text-2xl sm:text-3xl md:text-4xl" />
     @elseif ($param !== '')
         <x-header title="{{ __('Posts for search') }} {{ $param }}" size="text-2xl sm:text-3xl md:text-4xl" />
+        @elseif($favorites)
+    <x-header title="{{ __('Your favorites posts') }}" size="text-2xl sm:text-3xl md:text-4xl" />
     @endif
 
     <div class="mb-4 mary-table-pagination">

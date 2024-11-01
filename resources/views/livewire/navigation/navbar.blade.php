@@ -60,6 +60,12 @@ new class extends Component {
                 @endif
             @endforeach
         </span>
+         @auth
+            @if ($user->favoritePosts()->exists())
+                <a title="{{ __('Favorites posts') }}" href="{{ route('posts.favorites') }}"><x-icon name="s-star"
+                        class="w-7 h-7" /></a>
+            @endif
+        @endauth
 
         <x-theme-toggle title="{{ __('Toggle theme') }}" class="w-4 h-8" />
         <livewire:search />

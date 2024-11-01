@@ -100,6 +100,14 @@ public function unfavoritePost(): void
                 @lang('Show this category')
             </x-slot:content>
         </x-popover>
+         <x-popover>
+            <x-slot:trigger>
+                <a href="#bottom"><x-icon name="c-arrow-long-down" /></a>
+            </x-slot:trigger>
+            <x-slot:content class="pop-small">
+                @lang('To bottom')
+            </x-slot:content>
+        </x-popover>
     </div>
 
     <x-header title="{!! $post->title !!}" subtitle="{{ ucfirst($post->created_at->isoFormat('LLLL')) }} "
@@ -154,6 +162,16 @@ public function unfavoritePost(): void
                 @endauth
             @endif
         @endif
+    </div>
+    <div id="bottom" class="relative flex justify-end w-full py-5 mx-auto md:px-12 max-w-7xl">
+        <x-popover>
+            <x-slot:trigger>
+                <a href="#top"><x-icon name="c-arrow-long-up" />
+            </x-slot:trigger>
+            <x-slot:content class="pop-small">
+                @lang('To up')
+            </x-slot:content>
+        </x-popover>
     </div>
 
 </div>
