@@ -18,7 +18,6 @@ new class extends Component {
         if (request()->is('category/*')) {
             $this->category = $this->getCategoryBySlug($slug);
         }
-       
     }
 
     public function getPosts(): LengthAwarePaginator
@@ -33,13 +32,11 @@ new class extends Component {
 
     protected function getCategoryBySlug(string $slug): ?Category
     {
-        
         return 'category' === request()->segment(1) ? Category::whereSlug($slug)->firstOrFail() : null;
     }
 
     public function with(): array
     {
-        
         return ['posts' => $this->getPosts()];
     }
 }; ?>
@@ -49,8 +46,8 @@ new class extends Component {
     @if ($category)
         <x-header title="{{ __('Posts for category ') }} {{ $category->title }}"
             size="text-2xl sm:text-3xl md:text-4xl" />
-            @elseif ($param !== '')
-                <x-header title="{{ __('Posts for search') }} {{ $param }}" size="text-2xl sm:text-3xl md:text-4xl" />
+    @elseif ($param !== '')
+        <x-header title="{{ __('Posts for search') }} {{ $param }}" size="text-2xl sm:text-3xl md:text-4xl" />
     @endif
 
     <div class="mb-4 mary-table-pagination">
@@ -85,6 +82,11 @@ new class extends Component {
                         @if ($post->pinned)
                             <x-badge value="{{ __('Pinned') }}" class="p-3 badge-warning" />
                         @endif
+                        @auth
+                            @if ($post->is_favorited)
+                                <x-icon name="s-star" class="w-6 h-6 text-yellow-500 cursor-pointer" />
+                            @endif
+                        @endauth
                     </x-slot:menu>
 
                     <x-slot:actions>

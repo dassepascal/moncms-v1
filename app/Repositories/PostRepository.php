@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use Exception;
 use App\Models\{Category, Post};
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -58,7 +59,17 @@ class PostRepository
                 END AS excerpt",
             )
             ->with('user:id,name', 'category')
-            ->whereActive(true);
+            ->whereActive(true)
+            ->when(auth()->check(), function ($query) {
+			$userId = auth()->id();
+			$query->addSelect([
+				'is_favorited' => DB::table('favorites')
+					->selectRaw('1')
+					->whereColumn('post_id', 'posts.id')
+					->where('user_id', $userId)
+					->limit(1)
+			]);
+		});	
     }
    
 
