@@ -22,20 +22,40 @@ class extends Component {
     #[Validate('boolean')]
     public bool $remember = false;
 
-	public function login()
-	{
-        $this->validate();
 
-        $this->authenticate();
+    public function login()
+{
+    $credentials = $this->validate();
 
-        Session::regenerate();
+    if (auth()->attempt($credentials)) {
+        request()->session()->regenerate();
 
         if (auth()->user()->isAdmin()) {
             return redirect()->intended('/admin/dashboard');
         }
 
-        $this->redirectIntended(default: url('/'), navigate: true);
-	}
+        return redirect()->intended('/');
+    }
+
+    $this->addError('email', __('The provided credentials do not match our records.'));
+}
+
+	// public function login()
+	// {
+
+    //     $credentiels = $this->validate();
+    //     $this->validate();
+
+    //     $this->authenticate();
+
+    //     Session::regenerate();
+
+    //     if (auth()->user()->isAdmin()) {
+    //         return redirect()->intended('/admin/dashboard');
+    //     }
+
+    //     $this->redirectIntended(default: url('/'), navigate: true);
+	// }
 
     public function authenticate(): void
     {
