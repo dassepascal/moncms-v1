@@ -62,4 +62,18 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Post::class, 'favorites');
     }
+    public function isAdmin(): bool
+    {
+        return 'admin' === $this->role;
+    }
+
+    public function isRedac(): bool
+    {
+        return 'redac' === $this->role;
+    }
+
+    public function isAdminOrRedac(): bool
+    {
+        return 'admin' === $this->role || 'redac' === $this->role;
+    }
 }
