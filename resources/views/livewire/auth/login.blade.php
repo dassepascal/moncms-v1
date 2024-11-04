@@ -20,13 +20,13 @@ class extends Component {
     public string $password = '';
 
     #[Validate('boolean')]
-    public bool $remember = false;
+    // public bool $remember = false;
 
 
     public function login()
 {
     $credentials = $this->validate();
-
+dd($credentials);
     if (auth()->attempt($credentials)) {
         request()->session()->regenerate();
 
