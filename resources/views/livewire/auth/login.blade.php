@@ -2,110 +2,48 @@
 
 use Livewire\Attributes\{Layout, Validate, Title};
 use Livewire\Volt\Component;
-use Illuminate\Support\Str;
-use Illuminate\Auth\Events\Lockout;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\RateLimiter;
-use Illuminate\Validation\ValidationException;
 
-new
-#[Title('Login')]
-#[Layout('components.layouts.auth')]
+new #[Title('Login')] #[Layout('components.layouts.auth')] 
 class extends Component {
 
-    #[Validate('required|string|email')]
+    #[Validate('required|email')]
     public string $email = '';
 
-    #[Validate('required|string')]
+    #[Validate('required')]
     public string $password = '';
 
-    #[Validate('boolean')]
-    // public bool $remember = false;
-
-
     public function login()
-{
-    $credentials = $this->validate();
-dd($credentials);
-    if (auth()->attempt($credentials)) {
-        request()->session()->regenerate();
-
-        if (auth()->user()->isAdmin()) {
-            return redirect()->intended('/admin/dashboard');
-        }
-
-        return redirect()->intended('/');
-    }
-
-    $this->addError('email', __('The provided credentials do not match our records.'));
-}
-
-	// public function login()
-	// {
-
-    //     $credentiels = $this->validate();
-    //     $this->validate();
-
-    //     $this->authenticate();
-
-    //     Session::regenerate();
-
-    //     if (auth()->user()->isAdmin()) {
-    //         return redirect()->intended('/admin/dashboard');
-    //     }
-
-    //     $this->redirectIntended(default: url('/'), navigate: true);
-	// }
-
-    public function authenticate(): void
     {
-        $this->ensureIsNotRateLimited();
+        $credentials = $this->validate();
 
-        if (! Auth::attempt($this->only(['email', 'password']), $this->remember)) {
-            RateLimiter::hit($this->throttleKey());
+		if (auth()->attempt($credentials)) {
+			// Régénération de la session
+			request()->session()->regenerate();
 
-            throw ValidationException::withMessages([
-                'email' => __('auth.failed'),
-            ]);
-        }
+			if (auth()->user()->isAdmin()) {
+				return redirect()->intended('/admin/dashboard');
+			}
 
-        RateLimiter::clear($this->throttleKey());
+			// Redirection vers la page d'origine ou la page d'accueil
+			return redirect()->intended('/');
+		}
+
+        $this->addError('email', __('The provided credentials do not match our records.'));
     }
-
-    protected function ensureIsNotRateLimited(): void
-    {
-        if (! RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
-            return;
-        }
-
-        event(new Lockout(request()));
-
-        $seconds = RateLimiter::availableIn($this->throttleKey());
-
-        throw ValidationException::withMessages([
-            'email' => trans('auth.throttle', [
-                'seconds' => $seconds,
-                'minutes' => ceil($seconds / 60),
-            ]),
-        ]);
-    }
-
-    protected function throttleKey(): string
-    {
-        return Str::transliterate(Str::lower($this->email).'|'.request()->ip());
-    }
-
 }; ?>
 
 <div>
-    <x-card class="flex items-center justify-center h-screen" title="{{ __('Login') }}" shadow separator progress-indicator>
+    <x-card class="flex items-center justify-center h-screen" title="{{ __('Login') }}" shadow separator
+        progress-indicator>
         <x-form wire:submit="login">
-            <x-input label="{{ __('E-mail') }}" wire:model="email" icon="o-envelope" type="email" inline />
-            <x-input label="{{ __('Password') }}" wire:model="password" type="password" icon="o-key" type="password" inline />
+            <x-input label="{{ __('E-mail') }}" wire:model="email" icon="o-envelope" type="email" inline required />
+            <x-input label="{{ __('Password') }}" wire:model="password" type="password" icon="o-key" type="password"
+                inline required />
             <x-checkbox label="{{ __('Remember me') }}" wire:model="remember" />
             <x-slot:actions>
                 <div class="flex flex-col space-y-2 flex-end sm:flex-row sm:space-y-0 sm:space-x-2">
-                    <x-button label="{{ __('Login') }}" type="submit" icon="o-paper-airplane" class="ml-2 btn-primary sm:order-1" />
+                    <x-button label="{{ __('Login') }}" type="submit" icon="o-paper-airplane"
+                        class="ml-2 btn-primary sm:order-1" />
                     <div class="flex flex-col space-y-2 flex-end sm:flex-row sm:space-y-0 sm:space-x-2">
                         <x-button label="{{ __('Forgot your password?') }}" class="btn-ghost" link="/forgot-password" />
                         <x-button label="{{ __('Create an account') }}" class="btn-ghost" link="/register" />
