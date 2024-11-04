@@ -125,5 +125,8 @@
     "Add a post": "Ajouter un article",
     "Are you sure to delete this post?": "Etes-vous sûr de vouloir supprimer cet article ?",
     "deleted": "supprimé",
-    "Clone": "Dupliquer" 
+    "Clone": "Dupliquer" ,
+    "Filters": "Filtres",
+    "Select a category": "Sélectionnez une catégorie"
+   
 }

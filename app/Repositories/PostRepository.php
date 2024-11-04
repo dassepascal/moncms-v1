@@ -93,4 +93,15 @@ class PostRepository
             ->paginate(config('app.pagination'));
     }
 
+    public function generateUniqueSlug(string $slug): string
+    {
+        $newSlug = $slug;
+        $counter = 1;
+        while (Post::where('slug', $newSlug)->exists()) {
+            $newSlug = $slug . '-' . $counter;
+            ++$counter;
+        }
+        return $newSlug;
+    }
+
 }
