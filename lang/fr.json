@@ -116,5 +116,14 @@
     "Update your answer": "Modifier votre reponse",
     "Create a new post": "Créer un nouvel article",
     "Create": "Créer",
-    "Posts for category": "Articles pour la catégorie"
+    "Posts for category": "Articles pour la catégorie",
+    "All posts": "Tous les articles","Title": "Titre",
+    "Author": "Auteur",
+    "Updated": "Mis à jour",
+    "Category": "Catégorie",
+    "Published": "Publié",
+    "Add a post": "Ajouter un article",
+    "Are you sure to delete this post?": "Etes-vous sûr de vouloir supprimer cet article ?",
+    "deleted": "supprimé",
+    "Clone": "Dupliquer" 
 }
