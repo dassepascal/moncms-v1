@@ -3,16 +3,16 @@
 use Illuminate\Support\Facades\{Auth, Session};
 use Livewire\Volt\Component;
 
-new class() extends Component {
-	public function logout(): void
-	{
-		Auth::guard('web')->logout();
+new class extends Component {
+    public function logout(): void
+    {
+        Auth::guard('web')->logout();
 
-		Session::invalidate();
-		Session::regenerateToken();
+        Session::invalidate();
+        Session::regenerateToken();
 
-		$this->redirect('/');
-	}
+        $this->redirect('/');
+    }
 }; ?>
 
 <div>
@@ -25,10 +25,12 @@ new class() extends Component {
             </x-slot:actions>
         </x-list-item>
         <x-menu-separator />
-        <x-menu-item title="{{ __('Dashboard') }}" icon="s-building-office-2" link="{{ route('admin') }}" />  
+        <x-menu-item title="{{ __('Dashboard') }}" icon="s-building-office-2" link="{{ route('admin') }}" />
         <x-menu-sub title="{{ __('Posts') }}" icon="s-document-text">
-    <x-menu-item title="{{ __('All posts') }}" link="{{ route('posts.index') }}" />
-</x-menu-sub>       
+            <x-menu-item title="{{ __('All posts') }}" link="{{ route('posts.index') }}" />
+            <x-menu-item title="{{ __('Add a post') }}" link="{{ route('posts.create') }}" />
+
+        </x-menu-sub>
         <x-menu-item icon="m-arrow-right-end-on-rectangle" title="{{ __('Go on site') }}" link="/" />
         <x-menu-item>
             <x-theme-toggle />
