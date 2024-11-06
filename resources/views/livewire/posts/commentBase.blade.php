@@ -12,34 +12,40 @@ new class() extends Component {
 	public bool $showCreateForm = true;
 	public bool $showModifyForm = false;
 	public bool $alert          = false;
+	 //public Post $post;
+	
 
 	#[Validate('required|max:10000')]
 	public string $message = '';
 
-	public function mount($postId): void
+	public function mount( $postId ): void
 	{
+	
 		$this->postId = $postId;
+		//dd($this->postId);
+		//$this->post = Post::select('id', 'title', 'user_id')->with('user')->findOrFail($this->postId);
+		
 	}
 
 	public function createComment(): void
 	{
+		
 		$data = $this->validate();
 
 		if (!Auth::user()->valid) {
 			$this->alert = true;
 		}
 
-		$post = Post::select('id', 'title', 'user_id')->with('user')->findOrFail($this->postId);		
+		$post = Post::select('id', 'title', 'user_id')->with('user')->findOrFail($this->postId);
 
 		$this->comment = Comment::create([
 			'user_id' => Auth::id(),
 			'post_id' => $this->postId,
 			'body'    => $this->message,
+			
 		]);
 
-		if ($this->post->user_id != Auth::id()) {
 			$post->user->notify(new CommentCreated($this->comment));
-		}
 
 		$this->message = $data['message'];
 	}
@@ -98,12 +104,20 @@ new class() extends Component {
                 </div>
             </div>
 
-            @include('livewire.posts.comment-form', ['formTitle' => __('Update your comment'), 'formAction' => 'updateComment', 'showForm' => $showModifyForm, 'message' => $comment->body])
-
+            @include('livewire.posts.comment-form', [
+                'formTitle' => __('Update your comment'),
+                'formAction' => 'updateComment',
+                'showForm' => $showModifyForm,
+                'message' => $comment->body,
+            ])
         @endif
-
     @else
-        @include('livewire.posts.comment-form', ['formTitle' => __('Leave a comment'), 'formAction' => 'createComment', 'showForm' => true, 'message' => ''])
+        @include('livewire.posts.comment-form', [
+            'formTitle' => __('Leave a comment'),
+            'formAction' => 'createComment',
+            'showForm' => true,
+            'message' => '',
+        ])
     @endif
 
 </div>
