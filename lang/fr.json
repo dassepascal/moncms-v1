@@ -117,7 +117,8 @@
     "Create a new post": "Créer un nouvel article",
     "Create": "Créer",
     "Posts for category": "Articles pour la catégorie",
-    "All posts": "Tous les articles","Title": "Titre",
+    "All posts": "Tous les articles",
+    "Title": "Titre",
     "Author": "Auteur",
     "Updated": "Mis à jour",
     "Category": "Catégorie",
@@ -125,8 +126,15 @@
     "Add a post": "Ajouter un article",
     "Are you sure to delete this post?": "Etes-vous sûr de vouloir supprimer cet article ?",
     "deleted": "supprimé",
-    "Clone": "Dupliquer" ,
+    "Clone": "Dupliquer",
     "Filters": "Filtres",
-    "Select a category": "Sélectionnez une catégorie"
-   
+    "Select a category": "Sélectionnez une catégorie",
+    "Pinned": "Épinglé",
+    "Content": "Contenu",
+    "META Keywords": "META mots-clefs",
+    "Keywords separated by comma": "Mots-clefs séparés par une virgule",
+    "Max 70 chars": "Max 70 caractères",
+    "Max 160 chars": "Max 160 caractères",
+    "Enter the title": "Entrez le titre",
+    "Post added with success.": "Article ajouté avec succès."
 }

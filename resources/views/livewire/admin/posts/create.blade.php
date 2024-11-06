@@ -1,86 +1,110 @@
 <?php
 
 use Livewire\Volt\Component;
-use App\Models\Category;
+use App\Models\{Category, Post};
 use Mary\Traits\Toast;
-use Livewire\Attributes\{Layout, Validate, Rule};
+use Livewire\Attributes\{Layout, Validate};
 use Livewire\WithFileUploads;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
-new #[Layout('components.layouts.admin')] 
-class extends Component {
+new #[Layout('components.layouts.admin')] class extends Component {
     use WithFileUploads, Toast;
 
-	public int $category_id;
+    public int $category_id;
 
-    #[Rule('required|image|max:2000')]
-	public ?TemporaryUploadedFile $photo = null;
+   #[Validate('required|string|max:16777215')]
+public string $body = '';
 
-	#[Rule('required|string|max:16777215')]
-	public string $body = '';
+#[Validate('required|string|max:255')]
+public string $title = '';
 
-	#[Rule('required|string|max:255')]
-	public string $title = '';
+#[Validate('required|max:255|unique:posts,slug|regex:/^[a-z0-9]+(?:-[a-z0-9]+)*$/')]
+public string $slug = '';
 
-	#[Rule('required|max:255|unique:posts,slug|regex:/^[a-z0-9]+(?:-[a-z0-9]+)*$/')]
-	public string $slug = '';
+#[Validate('required')]
+public bool $active = false;
 
-	#[Rule('required')]
-	public bool $active = false;
+#[Validate('required')]
+public bool $pinned = false;
 
-	#[Rule('required')]
-	public bool $pinned = false;
+#[Validate('required|max:70')]
+public string $seo_title = '';
 
-	#[Rule('required|max:70')]
-	public string $seo_title = '';
+#[Validate('required|max:160')]
+public string $meta_description = '';
 
-	#[Rule('required|max:160')]
-	public string $meta_description = '';
-
-	#[Rule('required|regex:/^[A-Za-z0-9-éèàù]{1,50}?(,[A-Za-z0-9-éèàù]{1,50})*$/')]
-	public string $meta_keywords = '';
+#[Validate('required|regex:/^[A-Za-z0-9-éèàù]{1,50}?(,[A-Za-z0-9-éèàù]{1,50})*$/')]
+public string $meta_keywords = '';
 
     public function mount(): void
-	{
-		$category          = Category::first();
-		$this->category_id = $category->id;
-	}
+    {
+        $category = Category::first();
+        $this->category_id = $category->id;
+    }
 
     public function updatedTitle($value)
-	{
-        $this->slug      = Str::slug($value);
+    {
+        $this->slug = Str::slug($value);
         $this->seo_title = $value;
-	}
+    }
 
-	public function save()
-	{
-       
-		$data = $this->validate();
+    public function save()
+{
+    // Valider les données
+    $validatedData = $this->validate();
 
-		// $date = now()->format('Y/m');Missing [$rules/rules()] property/method on: [admin.posts.create]. 
-		// $path = $date . '/' . basename($this->photo->store('photos/' . $date, 'public'));
+    // Gérer l'upload de la photo
+    // if ($this->photo) {
+    //     $photoPath = $this->photo->store('posts', 'public');
+    // }
 
-        // $data['body'] = replaceAbsoluteUrlsWithRelative($data['body']);
+    try {
+      
+        // Créer le post
+        $post = Post::create([
+            'title' => $this->title,
+            'slug' => $this->slug,
+            'body' => $this->body,
+            'active' => $this->active,
+            'pinned' => $this->pinned,
+            'seo_title' => $this->seo_title,
+            'meta_description' => $this->meta_description,
+            'meta_keywords' => $this->meta_keywords,
+            'category_id' => $this->category_id,
+            'user_id' => Auth::id(),
+            'image' => $photoPath ?? null, // Ajouter le chemin de l'image si elle existe
+        ]);
+        // dd($post);
+  
+
+        // Réinitialiser les champs après la sauvegarde
+        $this->reset(['title', 'slug', 'body', 'active', 'pinned', 'seo_title', 'meta_description', 'meta_keywords', 'image']);
+
+        // Afficher un message de succès
+        $this->success(__('Post added successfully.'));
+
+        // Rediriger vers la liste des posts
+        return $this->redirect(route('admin.posts.index'), navigate: true);
+
+    } catch (\Exception $e) {
+        // Gérer les erreurs
+   
+        $this->error(__('An error occurred while saving the post.'));
         
-		Post::create(
-			$data + [
-				'user_id'     => Auth::id(),
-				'category_id' => $this->category_id,
-				// 'image'       => $path,
-			],
-		);
-
-		$this->success(__('Post added with success.'), redirectTo: '/admin/posts/index');
-	}
-    
+        // Log l'erreur pour le débogage
+        \Log::error('Error saving post: ' . $e->getMessage());
+    }
+}
 
     public function with(): array
-	{
-		return [
-			'categories' => Category::orderBy('title')->get(),
-		];
-	}
-    
-}; ?>
+    {
+        return [
+            'categories' => Category::orderBy('title')->get(),
+        ];
+    }
+};
+?>
 
 <div>
     <x-header title="{{ __('Add a post') }}" separator progress-indicator>
@@ -101,9 +125,12 @@ class extends Component {
             <x-input type="text" wire:model="title" label="{{ __('Title') }}"
                 placeholder="{{ __('Enter the title') }}" wire:change="$refresh" />
             <x-input type="text" wire:model="slug" label="{{ __('Slug') }}" />
-            <x-editor wire:model="body" label="{{ __('Content') }}" :config="config('tinymce.config')"
-                folder="{{ 'photos/' . now()->format('Y/m') }}" />
-            <x-card title="{{ __('SEO') }}" shadow separator>
+            
+             <x-textarea label="{{ __('Content') }}" wire:model="body"
+                    hint="{{ __('Max 160 chars') }}" rows="" inline />
+           {{-- <x-markdown wire:model="body" label="{{ __('Content') }}" /> --}} {{-- <x-editor wire:model="body" label="{{ __('Content') }}" :config="config('tinymce.config')"
+                folder="{{ 'photos/' . now()->format('Y/m') }}" /> --}} <x-card title="{{ __('SEO') }}"
+                shadow separator>
                 <x-input placeholder="{{ __('Title') }}" wire:model="seo_title" hint="{{ __('Max 70 chars') }}" />
                 <br>
                 <x-textarea label="{{ __('META Description') }}" wire:model="meta_description"
@@ -111,12 +138,12 @@ class extends Component {
                 <br>
                 <x-textarea label="{{ __('META Keywords') }}" wire:model="meta_keywords"
                     hint="{{ __('Keywords separated by comma') }}" rows="1" inline />
-            </x-card>
-            <hr>
-            <x-slot:actions>
-                <x-button label="{{ __('Save') }}" icon="o-paper-airplane" spinner="save" type="submit"
-                    class="btn-primary" />
-            </x-slot:actions>
-        </x-form>
+    </x-card>
+    <hr>
+    <x-slot:actions>
+        <x-button label="{{ __('Save') }}" icon="o-paper-airplane" spinner="save" type="submit"
+            class="btn-primary" />
+    </x-slot:actions>
+    </x-form>
     </x-card>
 </div>

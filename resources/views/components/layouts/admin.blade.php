@@ -7,8 +7,9 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ isset($title) ? $title . ' | ' . config('app.name') : config('app.name') }}</title>
-    <script src="{{ asset('storage/scripts/tinymce.min.js') }}"></script>
-  {{-- <script src="https://cdn.tiny.cloud/1/dselpn462011wbz9z2v5tc514ph4r7gerljiqeua9og6x1rd/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script> --}}
+    {{-- EasyMDE --}}
+    {{-- <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">
+    <script src="https://unpkg.com/easymde/dist/easymde.min.js"></script> --}}
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
