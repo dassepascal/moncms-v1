@@ -45,6 +45,7 @@ new class extends Component {
 
     public function with(): array
     {
+        // dd($this->getPosts());
         return ['posts' => $this->getPosts()];
     }
 }; ?>
@@ -67,8 +68,10 @@ new class extends Component {
     </div>
 
     <div class="container mx-auto">
-        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 bg-red-500">
+          
             @forelse($posts as $post)
+           
                 <x-card
                     class="w-full transition duration-500 ease-in-out shadow-md shadow-gray-500 hover:shadow-xl hover:shadow-gray-500"
                     title="{!! $post->title !!}">
@@ -137,9 +140,9 @@ new class extends Component {
 
 
     <!-- Pagination inférieure -->
-    <div class="mb-4 mary-table-pagination">
+    {{-- <div class="mb-4 mary-table-pagination">
         <div class="mb-5 border border-t-0 border-x-0 border-b-1 border-b-base-300"></div>
         {{ $posts->links() }}
-    </div>
+    </div> --}}
 
 </div>

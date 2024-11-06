@@ -7,9 +7,13 @@ use Livewire\Attributes\{Layout, Validate};
 use Livewire\WithFileUploads;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
+
 
 new #[Layout('components.layouts.admin')] class extends Component {
     use WithFileUploads, Toast;
+     #[Rule('required|image|max:2000')]
+	public ?TemporaryUploadedFile $photo = null;
 
     public int $category_id;
 
@@ -53,11 +57,12 @@ public string $meta_keywords = '';
 {
     // Valider les données
     $validatedData = $this->validate();
+    $date= now()->format('Y/m');
 
     // Gérer l'upload de la photo
-    // if ($this->photo) {
-    //     $photoPath = $this->photo->store('posts', 'public');
-    // }
+    if ($this->photo) {
+        $photoPath = $date . '/' . basename($this->photo->store('photos/' . $date, 'public'));
+    }
 
     try {
       
@@ -89,7 +94,7 @@ public string $meta_keywords = '';
 
     } catch (\Exception $e) {
         // Gérer les erreurs
-   
+
         $this->error(__('An error occurred while saving the post.'));
         
         // Log l'erreur pour le débogage
@@ -126,9 +131,9 @@ public string $meta_keywords = '';
                 placeholder="{{ __('Enter the title') }}" wire:change="$refresh" />
             <x-input type="text" wire:model="slug" label="{{ __('Slug') }}" />
             
-             <x-textarea label="{{ __('Content') }}" wire:model="body"
-                    hint="{{ __('Max 160 chars') }}" rows="" inline />
-           {{-- <x-markdown wire:model="body" label="{{ __('Content') }}" /> --}} {{-- <x-editor wire:model="body" label="{{ __('Content') }}" :config="config('tinymce.config')"
+             {{-- <x-textarea label="{{ __('Content') }}" wire:model="body"
+                    hint="{{ __('Max 160 chars') }}" rows="" inline /> --}}
+           <x-markdown wire:model="body" label="{{ __('Content') }}" /> {{-- <x-editor wire:model="body" label="{{ __('Content') }}" :config="config('tinymce.config')"
                 folder="{{ 'photos/' . now()->format('Y/m') }}" /> --}} <x-card title="{{ __('SEO') }}"
                 shadow separator>
                 <x-input placeholder="{{ __('Title') }}" wire:model="seo_title" hint="{{ __('Max 70 chars') }}" />
@@ -140,6 +145,10 @@ public string $meta_keywords = '';
                     hint="{{ __('Keywords separated by comma') }}" rows="1" inline />
     </x-card>
     <hr>
+    <x-file wire:model="photo" label="{{ __('Featured image') }}"
+                hint="{{ __('Click on the image to modify') }}" accept="image/png, image/jpeg">
+                <img src="{{ $photo == '' ? '/storage/ask.jpg' : $photo }}" class="h-40" />
+            </x-file>
     <x-slot:actions>
         <x-button label="{{ __('Save') }}" icon="o-paper-airplane" spinner="save" type="submit"
             class="btn-primary" />
