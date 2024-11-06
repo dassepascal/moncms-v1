@@ -112,7 +112,7 @@ public string $meta_keywords = '';
 ?>
 
 <div>
-    <x-header title="{{ __('Add a post') }}" separator progress-indicator>
+    <x-header title="{{ __('Edit a post') }}" separator progress-indicator>
         <x-slot:actions>
             <x-button icon="s-building-office-2" label="{{ __('Dashboard') }}" class="btn-outline lg:hidden"
                 link="{{ route('admin') }}" />
@@ -124,8 +124,8 @@ public string $meta_keywords = '';
                 wire:change="$refresh" />
             <br>
             <div class="flex gap-6">
-                <x-checkbox label="{{ __('Published') }}" wire:model="active" />
-                <x-checkbox label="{{ __('Pinned') }}" wire:model="pinned" />
+                <x-checkbox label="{{ __('Published') }}" wire:model="active"  value="1" />
+                <x-checkbox label="{{ __('Pinned') }}" wire:model="pinned" value="1" />
             </div>
             <x-input type="text" wire:model="title" label="{{ __('Title') }}"
                 placeholder="{{ __('Enter the title') }}" wire:change="$refresh" />

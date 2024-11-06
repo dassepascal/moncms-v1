@@ -57,6 +57,16 @@ new #[Title('List Posts'), Layout('components.layouts.admin')] class extends Com
 			->latest()
             ->paginate(6);
 	}
+    public function editPost(int $postId): void
+    {
+        $post = Post::findOrFail($postId);
+        $this->dispath('editPost', $post);
+
+
+         redirect()->route('admin.posts.edit', $post);
+        // Ici on redirigera vers le formulaire de modification de l'article
+
+    }
 
     public function deletePost(int $postId): void
 	{
@@ -142,6 +152,15 @@ new #[Title('List Posts'), Layout('components.layouts.admin')] class extends Com
 
                 @scope('actions', $post)
                     <div class="flex">
+                          <x-popover>
+                            <x-slot:trigger>
+                                <x-button icon="o-pencil" wire:click="dispath('editPost')" spinner
+                                    class="btn-ghost btn-sm" />
+                            </x-slot:trigger>
+                            <x-slot:content class="pop-small">
+                                @lang('Edit')
+                            </x-slot:content>
+                        </x-popover>
                         <x-popover>
                             <x-slot:trigger>
                                 <x-button icon="o-finger-print" wire:click="clonePost({{ $post->id }})" spinner
