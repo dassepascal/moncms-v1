@@ -165,5 +165,8 @@
     "Valid user": "Utilisateur validé",
     "Send an email": "Envoyer un email",
     "Are you sure to delete this user?": "Etes-vous sûr de vouloir supprimer cet utilisateur ?",
-    "Registration": "Inscription"
+    "Registration": "Inscription",
+    "Edit an account": "Modifier un compte",
+    "Select a role": "Sélectionnez un rôle",
+    "User edited with success.": "Utilisateur mis à jour avec succès."
 }

@@ -54,11 +54,11 @@ new #[Title('Dashboard')] #[Layout('components.layouts.admin')] class extends Co
             </a>
 
             @if (Auth::user()->isAdmin())
-                <a href="#" class="flex-grow">
+                <a href="{{ route('pages.index')}}" class="flex-grow">
                     <x-stat title="{{ __('Pages') }}" value="{{ $pages->count() }}" icon="s-document"
                         class="shadow-hover" />
                 </a>
-                <a href="#" class="flex-grow">
+                <a href="{{route('users.index')}}" class="flex-grow">
                     <x-stat title="{{ __('Users') }}" value="{{ $users }}" icon="s-user"
                         class="shadow-hover" />
                 </a>
