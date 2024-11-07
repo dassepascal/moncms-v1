@@ -2,6 +2,10 @@
 
 return [
 
+    // 'providers' => [
+    //     Illuminate\Pagination\PaginationServiceProvider::class,
+    // ],
+
     /*
     |--------------------------------------------------------------------------
     | Application Name
