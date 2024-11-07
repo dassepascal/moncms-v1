@@ -133,7 +133,7 @@ public string $meta_keywords = '';
             
              {{-- <x-textarea label="{{ __('Content') }}" wire:model="body"
                     hint="{{ __('Max 160 chars') }}" rows="" inline /> --}}
-           <x-markdown wire:model="body" label="{{ __('Content') }}" /> {{-- <x-editor wire:model="body" label="{{ __('Content') }}" :config="config('tinymce.config')"
+           <x-markdown-editor wire:model="body" label="{{ __('Content') }}" /> {{-- <x-editor wire:model="body" label="{{ __('Content') }}" :config="config('tinymce.config')"
                 folder="{{ 'photos/' . now()->format('Y/m') }}" /> --}} <x-card title="{{ __('SEO') }}"
                 shadow separator>
                 <x-input placeholder="{{ __('Title') }}" wire:model="seo_title" hint="{{ __('Max 70 chars') }}" />

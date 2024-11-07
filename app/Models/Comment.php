@@ -15,6 +15,10 @@ class Comment extends Model
     protected $casts = [
         'body' => CleanHtmlInput::class,
     ];
+    public function getDepth(): int
+    {
+        return $this->parent ? $this->parent->getDepth() + 1 : 0;
+    }
 
     use HasFactory;
     protected $fillable = [

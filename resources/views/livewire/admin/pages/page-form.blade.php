@@ -4,7 +4,7 @@
             placeholder="{{ __('Enter the title') }}" wire:change="$refresh" />
         <x-input type="text" wire:model="slug" label="{{ __('Slug') }}" /><br>
         <x-checkbox label="{{ __('Published') }}" wire:model="active" /><br>
-           <x-markdown wire:model="body" label="{{ __('Content') }}" /> 
+           <x-markdown-editor wire:model="body" label="{{ __('Content') }}" /> 
         {{-- <x-editor wire:model="body" label="{{ __('Content') }}" :config="config('tinymce.config')"
             folder="{{ 'photos/' . now()->format('Y/m') }}" /> --}}
         <x-card title="{{ __('SEO') }}" shadow separator>
