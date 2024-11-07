@@ -35,6 +35,7 @@ Route::middleware('auth')->group(function () {
             Volt::route('/users/{user}/edit', 'admin.users.edit')->name('users.edit');
             Volt::route('/comments/index', 'admin.comments.index')->name('comments.index');
             Volt::route('/comments/{comment}/edit', 'admin.comments.edit')->name('comments.edit');
+            Volt::route('/menus/index', 'admin.menus.index')->name('menus.index');
         });
     });
 });
