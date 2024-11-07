@@ -140,5 +140,10 @@
     "Featured image": "Image mise en avant",
     "Click on the image to modify": "Cliquez sur cette image pour la modifier",
     "Edit a post": "Modifier un article",
-    "Post updated with success.": "Article mis à jour avec succès."
+    "Post updated with success.": "Article mis à jour avec succès.",
+    "Categories": "Catégories",
+    "Are you sure to delete this category?": "Etes-vous sûr de vouloir supprimer cette catégorie ?",
+    "Category deleted with success.": "Catégorie supprimée avec succès.",
+    "Create a new category": "Créer une nouvelle catégorie",
+    "Category created with success.": "Catégorie créée avec succès."
 }

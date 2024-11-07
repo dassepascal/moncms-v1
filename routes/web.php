@@ -1,6 +1,7 @@
 <?php
 
 use Livewire\Volt\Volt;
+use App\Http\Middleware\IsAdmin;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\IsAdminOrRedac;
 
@@ -27,6 +28,8 @@ Route::middleware('auth')->group(function () {
         Volt::route('/posts/index', 'admin.posts.index')->name('posts.index');
         Volt::route('/posts/create', 'admin.posts.create')->name('posts.create');
         Volt::route('/posts/{post:slug}/edit', 'admin.posts.edit')->name('posts.edit');
-
+            Route::middleware(IsAdmin::class)->group(function () {
+                Volt::route('/categories/index', 'admin.categories.index')->name('categories.index');
+            });
     });
 });
