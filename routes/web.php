@@ -28,6 +28,9 @@ Route::middleware('auth')->group(function () {
         Route::middleware(IsAdmin::class)->group(function () {
             Volt::route('/categories/index', 'admin.categories.index')->name('categories.index');
             Volt::route('/categories/{category}/edit', 'admin.categories.edit')->name('categories.edit');
+            Volt::route('/pages/index', 'admin.pages.index')->name('pages.index');
+            Volt::route('/pages/create', 'admin.pages.create')->name('pages.create');
+            Volt::route('/pages/{page:slug}/edit', 'admin.pages.edit')->name('pages.edit');
         });
     });
 });
