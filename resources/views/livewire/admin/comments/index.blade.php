@@ -7,15 +7,12 @@ use Livewire\Volt\Component;
 use Livewire\WithPagination;
 use Mary\Traits\Toast;
 
-new #[Title('Comments'), Layout('components.layouts.admin')] 
-class extends Component {
+new #[Title('Comments'), Layout('components.layouts.admin')] class extends Component {
     use Toast, WithPagination;
 
     public string $search = '';
     public array $sortBy = ['column' => 'created_at', 'direction' => 'desc'];
     public $role = 'all';
-
-  
 
     public function deleteComment(Comment $comment): void
     {
@@ -35,7 +32,6 @@ class extends Component {
     {
         return [['key' => 'user_name', 'label' => __('Author')], ['key' => 'body', 'label' => __('Comment'), 'sortable' => false], ['key' => 'post_title', 'label' => __('Post')], ['key' => 'created_at', 'label' => __('Sent on')]];
     }
-    
 
     public function comments(): LengthAwarePaginator
     {
@@ -43,10 +39,7 @@ class extends Component {
             ->when($this->search, fn($q) => $q->where('body', 'like', "%{$this->search}%"))
             ->when('post_title' === $this->sortBy['column'], fn($q) => $q->join('posts', 'comments.post_id', '=', 'posts.id')->orderBy('posts.title', $this->sortBy['direction']), fn($q) => $q->orderBy($this->sortBy['column'], $this->sortBy['direction']))
             ->when(Auth::user()->isRedac(), fn($q) => $q->whereRelation('post', 'user_id', Auth::id()))
-            ->with([
-                'user:id,name,email,valid',
-                'post:id,title,slug,user_id',
-            ])
+            ->with(['user:id,name,email,valid', 'post:id,title,slug,user_id'])
             ->withAggregate('user', 'name')
             ->paginate(10);
     }
@@ -103,6 +96,15 @@ class extends Component {
                             </x-slot:content>
                         </x-popover>
                     @endif
+                    <x-popover>
+                        <x-slot:trigger>
+                            <x-button icon="c-eye" link="{{ route('comments.edit', $comment->id) }}" spinner
+                                class="btn-ghost btn-sm" />
+                        </x-slot:trigger>
+                        <x-slot:content class="pop-small">
+                            @lang('Edit or answer')
+                        </x-slot:content>
+                    </x-popover>
                     <x-popover>
                         <x-slot:trigger>
                             <x-button icon="s-document-text" link="{{ route('posts.show', $comment->post->slug) }}" spinner
