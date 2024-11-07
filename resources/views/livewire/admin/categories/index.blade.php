@@ -63,7 +63,7 @@ class extends Component {
         </x-slot:actions>
     </x-header>
     <x-card>
-        <x-table striped :headers="$headers" :rows="$categories" :sort-by="$sortBy" link="#"
+        <x-table striped :headers="$headers" :rows="$categories" :sort-by="$sortBy" link="/admin/categories/{id}/edit"
             with-pagination>
             @scope('actions', $category)
         <x-popover>
