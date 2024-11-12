@@ -202,6 +202,14 @@
     "Footer deleted with success.": "Pied de page supprimé avec succès.",
     "Create a new footer": "Créer un nouveau pied de page",
     "Are you sure to delete this footer?": "Etes-vous sûr de vouloir supprimer ce menu de pied de page ?",
-    "Footer updated with success.": "Pied de page mis à jour avec succès"
+    "Footer updated with success.": "Pied de page mis à jour avec succès",
+    "Select year and month": "Sélectionner l'année et le mois",
+    "Year": "Année",
+    "Month": "Mois",
+    "Path": "Chemin",
+    "Copy url": "Copier l'URL",
+    "Manage image": "Gérer l'image",
+    "Delete image": "Supprimer l'image",
+    "Image deleted with success.": "Image supprimée avec succès."
     
 }
