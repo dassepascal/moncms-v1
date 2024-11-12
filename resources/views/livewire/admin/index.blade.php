@@ -8,37 +8,37 @@ use Livewire\Volt\Component;
 use Mary\Traits\Toast;
 
 new #[Title('Dashboard')] #[Layout('components.layouts.admin')] class extends Component {
-    use Toast;
+	use Toast;
 
-    public array $headersPosts;
-    public bool $openGlance = true;
+	public array $headersPosts;
+	public bool $openGlance = true;
 
-    public function mount(): void
-    {
-        $this->headersPosts = [['key' => 'date', 'label' => __('Date')], ['key' => 'title', 'label' => __('Title')]];
-    }
+	public function mount(): void
+	{
+		$this->headersPosts = [['key' => 'date', 'label' => __('Date')], ['key' => 'title', 'label' => __('Title')]];
+	}
 
-    public function deleteComment(Comment $comment): void
-    {
-        $comment->delete();
+	public function deleteComment(Comment $comment): void
+	{
+		$comment->delete();
 
-        $this->warning('Comment deleted', __('Good bye!'), position: 'toast-bottom');
-    }
+		$this->warning('Comment deleted', __('Good bye!'), position: 'toast-bottom');
+	}
 
-    public function with(): array
-    {
-        $user = Auth::user();
-        $isRedac = $user->isRedac();
-        $userId = $user->id;
+	public function with(): array
+	{
+		$user    = Auth::user();
+		$isRedac = $user->isRedac();
+		$userId  = $user->id;
 
-        return [
-            'pages' => Page::select('id', 'title', 'slug')->get(),
-            'posts' => Post::select('id', 'title', 'slug', 'user_id', 'created_at', 'updated_at')->when($isRedac, fn(Builder $q) => $q->where('user_id', $userId))->latest()->get(),
-            'commentsNumber' => Comment::when($isRedac, fn(Builder $q) => $q->whereRelation('post', 'user_id', $userId))->count(),
-            'comments' => Comment::with('user', 'post:id,title,slug')->when($isRedac, fn(Builder $q) => $q->whereRelation('post', 'user_id', $userId))->latest()->take(5)->get(),
-            'users' => User::count(),
-        ];
-    }
+		return [
+			'pages'          => Page::select('id', 'title', 'slug')->get(),
+			'posts'          => Post::select('id', 'title', 'slug', 'user_id', 'created_at', 'updated_at')->when($isRedac, fn (Builder $q) => $q->where('user_id', $userId))->latest()->get(),
+			'commentsNumber' => Comment::when($isRedac, fn (Builder $q) => $q->whereRelation('post', 'user_id', $userId))->count(),
+			'comments'       => Comment::with('user', 'post:id,title,slug')->when($isRedac, fn (Builder $q) => $q->whereRelation('post', 'user_id', $userId))->latest()->take(5)->get(),
+			'users'          => User::count(),
+		];
+	}
 }; ?>
 
 <div>
@@ -48,7 +48,7 @@ new #[Title('Dashboard')] #[Layout('components.layouts.admin')] class extends Co
         </x-slot:heading>
         <x-slot:content class="flex flex-wrap gap-4">
 
-            <a href="#" class="flex-grow">
+            <a href="{{ route('posts.index') }}" class="flex-grow">
                 <x-stat title="{{ __('Posts') }}" description="" value="{{ $posts->count() }}" icon="s-document-text"
                     class="shadow-hover" />
             </a>
@@ -71,6 +71,7 @@ new #[Title('Dashboard')] #[Layout('components.layouts.admin')] class extends Co
     </x-collapse>
 
     <br>
+
     @foreach ($comments as $comment)
         @if (!$comment->user->valid)
             <x-alert title="{!! __('Comment to valid from ') . $comment->user->name !!}" description="{!! $comment->body !!}" icon="c-chat-bubble-left"
@@ -111,8 +112,7 @@ new #[Title('Dashboard')] #[Layout('components.layouts.admin')] class extends Co
                 @scope('actions', $post)
                     <x-popover>
                         <x-slot:trigger>
-                            <x-button icon="s-document-text" link="{{ route('posts.show', $post->slug) }}" spinner
-                                class="btn-ghost btn-sm" />
+                            <x-button icon="s-document-text" link="{{ route('posts.show', $post->slug) }}" spinner class="btn-ghost btn-sm" />                            
                         </x-slot:trigger>
                         <x-slot:content class="pop-small">
                             @lang('Show post')
@@ -145,7 +145,7 @@ new #[Title('Dashboard')] #[Layout('components.layouts.admin')] class extends Co
                     <x-slot:actions>
                         <x-popover>
                             <x-slot:trigger>
-                                <x-button icon="c-eye" link="#" spinner class="btn-ghost btn-sm" />
+                                <x-button icon="c-eye" link="{{ route('comments.edit', $comment->id) }}" spinner class="btn-ghost btn-sm" />                         
                             </x-slot:trigger>
                             <x-slot:content class="pop-small">
                                 @lang('Edit or answer')
@@ -153,8 +153,7 @@ new #[Title('Dashboard')] #[Layout('components.layouts.admin')] class extends Co
                         </x-popover>
                         <x-popover>
                             <x-slot:trigger>
-                                <x-button icon="s-document-text" link="{{ route('posts.show', $comment->post->slug) }}"
-                                    spinner class="btn-ghost btn-sm" />
+                                <x-button icon="s-document-text" link="{{ route('posts.show', $comment->post->slug) }}" spinner class="btn-ghost btn-sm" />                       
                             </x-slot:trigger>
                             <x-slot:content class="pop-small">
                                 @lang('Show post')
@@ -163,12 +162,12 @@ new #[Title('Dashboard')] #[Layout('components.layouts.admin')] class extends Co
                         <x-popover>
                             <x-slot:trigger>
                                 <x-button icon="o-trash" wire:click="deleteComment({{ $comment->id }})"
-                                    wire:confirm="{{ __('Are you sure to delete this comment?') }}" spinner
-                                    class="text-red-500 btn-ghost btn-sm" />
+                                    wire:confirm="{{ __('Are you sure to delete this comment?') }}" 
+                                    spinner class="text-red-500 btn-ghost btn-sm" />                   
                             </x-slot:trigger>
                             <x-slot:content class="pop-small">
                                 @lang('Delete')
-                            </x-slot:content>Volt::route('/menus/{menu}/edit', 'admin.menus.edit')->name('menus.edit');
+                            </x-slot:content>
                         </x-popover>
                     </x-slot:actions>
                 </x-list-item>
