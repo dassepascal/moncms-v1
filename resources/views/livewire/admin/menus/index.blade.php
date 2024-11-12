@@ -209,7 +209,7 @@ class extends Component {
                     @endif
                     <x-popover>
                         <x-slot:trigger>
-                            <x-button icon="c-arrow-path-rounded-square" link=""
+                            <x-button icon="c-arrow-path-rounded-square" link="{{ route('menus.edit', $menu->id) }}"
                                 class="text-blue-500 btn-ghost btn-sm" spinner />
                         </x-slot:trigger>
                         <x-slot:content class="pop-small">
@@ -265,7 +265,7 @@ class extends Component {
                                 @endif
 								<x-popover>
 									<x-slot:trigger>
-										<x-button icon="c-arrow-path-rounded-square" link=""
+										<x-button icon="c-arrow-path-rounded-square" link="{{ route('submenus.edit', $submenu->id) }}"
 											class="text-blue-500 btn-ghost btn-sm" spinner />
 									</x-slot:trigger>
 									<x-slot:content class="pop-small">
