@@ -197,6 +197,11 @@
 
     "Link": "Lien",
     "Select a post, type to search": "Sélectionnez un article, tapez pour rechercher",
-    "Footer": "Pieds de page"
+    "Footer": "Pieds de page",
+    "Edit a footer": "Modifier le pied de page",
+    "Footer deleted with success.": "Pied de page supprimé avec succès.",
+    "Create a new footer": "Créer un nouveau pied de page",
+    "Are you sure to delete this footer?": "Etes-vous sûr de vouloir supprimer ce menu de pied de page ?",
+    "Footer updated with success.": "Pied de page mis à jour avec succès"
     
 }
