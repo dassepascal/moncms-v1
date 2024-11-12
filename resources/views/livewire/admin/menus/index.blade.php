@@ -209,7 +209,11 @@ class extends Component {
                     @endif
                     <x-popover>
                         <x-slot:trigger>
+<<<<<<< HEAD
                             <x-button icon="c-arrow-path-rounded-square" link="{{ route('menus.edit', $menu->id) }}"
+=======
+                            <x-button icon="c-arrow-path-rounded-square" link="{{ route('menus.edit',$menu->id)}}"
+>>>>>>> menu
                                 class="text-blue-500 btn-ghost btn-sm" spinner />
                         </x-slot:trigger>
                         <x-slot:content class="pop-small">
@@ -256,7 +260,7 @@ class extends Component {
                                 @if ($submenu->order < $menu->submenus->count())
 									<x-popover>
 										<x-slot:trigger>
-											<x-button icon="s-chevron-down" wire:click="downSub({{ $submenu->id }})" spinner />
+											<x-button icon="s-chevron-down" e5d59f7wire:click="downSub({{ $submenu->id }})" spinner />
 										</x-slot:trigger>
 										<x-slot:content class="pop-small">
 											@lang('Down')

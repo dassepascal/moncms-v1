@@ -31,15 +31,15 @@ new class extends Component {
             <x-menu-item title="{{ __('Add a post') }}" link="{{ route('posts.create') }}" />
             @if (Auth::user()->isAdmin())
                 <x-menu-item title="{{ __('Categories') }}" link="{{ route('categories.index') }}" />
-                
             @endif
         </x-menu-sub>
-         @if (Auth::user()->isAdmin())
+        @if (Auth::user()->isAdmin())
             <x-menu-sub title="{{ __('Pages') }}" icon="s-document">
                 <x-menu-item title="{{ __('All pages') }}" link="{{ route('pages.index') }}" />
                 <x-menu-item title="{{ __('Add a page') }}" link="{{ route('pages.create') }}" />
-                
+
             </x-menu-sub>
+<<<<<<< HEAD
              <x-menu-item icon="s-user" title="{{ __('Accounts') }}" link="{{ route('users.index') }}" />
              <x-menu-item icon="c-chat-bubble-left" title="{{ __('Comments') }}" link="{{ route('comments.index') }}" />
               <x-menu-sub title="{{ __('Menus') }}" icon="m-list-bullet">
@@ -48,6 +48,16 @@ new class extends Component {
 
     </x-menu-sub>
         @endif 
+=======
+            <x-menu-item icon="s-user" title="{{ __('Accounts') }}" link="{{ route('users.index') }}" />
+            <x-menu-item icon="c-chat-bubble-left" title="{{ __('Comments') }}"
+                link="{{ route('comments.index') }}" />
+            <x-menu-sub title="{{ __('Menus') }}" icon="m-list-bullet">
+                <x-menu-item title="{{ __('Navbar') }}" link="{{ route('menus.index') }}" />
+                <x-menu-item title="{{ __('Footer') }}" link="{{ route('menus.footers') }}" />
+            </x-menu-sub>
+        @endif
+>>>>>>> menu
         <x-menu-item icon="m-arrow-right-end-on-rectangle" title="{{ __('Go on site') }}" link="/" />
         <x-menu-item>
             <x-theme-toggle />
