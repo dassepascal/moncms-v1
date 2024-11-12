@@ -168,7 +168,7 @@ new #[Title('Dashboard')] #[Layout('components.layouts.admin')] class extends Co
                             </x-slot:trigger>
                             <x-slot:content class="pop-small">
                                 @lang('Delete')
-                            </x-slot:content>
+                            </x-slot:content>Volt::route('/menus/{menu}/edit', 'admin.menus.edit')->name('menus.edit');
                         </x-popover>
                     </x-slot:actions>
                 </x-list-item>
