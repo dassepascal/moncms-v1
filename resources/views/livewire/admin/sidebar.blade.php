@@ -49,7 +49,7 @@ new class extends Component {
             </x-menu-sub>
         @endif
         <x-menu-item icon="m-arrow-right-end-on-rectangle" title="{{ __('Go on site') }}" link="/" />
-        <x-menu-item icon="c-photo" title="{{ __('Images') }}" link="{{ route('images.index') }}" />
+      
         <x-menu-item>
             <x-theme-toggle />
         </x-menu-item>
