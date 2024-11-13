@@ -78,7 +78,7 @@ new #[Layout('components.layouts.admin')] class extends Component {
                 'user_id' => Auth::id(),
                 'image' => $photoPath ?? null, // Ajouter le chemin de l'image si elle existe
             ]);
-            dd($post);
+           // dd($post);
 
             // Réinitialiser les champs après la sauvegarde
             $this->reset(['title', 'slug', 'body', 'active', 'pinned', 'seo_title', 'meta_description', 'meta_keywords', 'image']);
