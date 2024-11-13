@@ -9,6 +9,7 @@ use Database\Seeders\PageSeeder;
 use Database\Seeders\PostSeeder;
 use Database\Seeders\UserSeeder;
 use Database\Seeders\CommentSeeder;
+use Database\Seeders\SettingSeeder;
 use Database\Seeders\CategorySeeder;
 
 class DatabaseSeeder extends Seeder
@@ -29,7 +30,8 @@ class DatabaseSeeder extends Seeder
             PageSeeder::class,
             FooterSeeder::class,
             MenusSeeder::class ,
-            CommentSeeder ::class,        
+            CommentSeeder ::class,   
+            SettingSeeder ::class    
         ]);
     }
     }

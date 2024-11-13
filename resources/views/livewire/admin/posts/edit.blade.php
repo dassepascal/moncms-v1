@@ -60,6 +60,7 @@ class extends Component {
 			'meta_description' => 'required|max:160',
 			'meta_keywords'    => 'required|regex:/^[A-Za-z0-9-éèàù]{1,50}?(,[A-Za-z0-9-éèàù]{1,50})*$/',
 		]);
+	
 
 		if ($this->photo) {			
 			$date          = now()->format('Y/m');

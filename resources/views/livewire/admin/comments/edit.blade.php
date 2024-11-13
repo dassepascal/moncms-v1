@@ -88,6 +88,7 @@ class extends Component {
        @if ($depth < 3)
     <x-card title="{{ __('Your answer') }}" shadow separator progress-indicator>
         <x-form wire:submit="saveAnswer">
+		{{-- too --}}
             <x-markdown-editor wire:model="body_answer" label="{{ __('Content') }}" name="body_answer" />
             <x-slot:actions>
                 <x-button label="{{ __('Save') }}" icon="o-paper-airplane" spinner="save" type="submit"
