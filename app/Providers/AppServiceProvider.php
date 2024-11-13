@@ -3,8 +3,9 @@
 namespace App\Providers;
 
 use App\Models\Menu;
-use Illuminate\Support\Facades;
+use App\Models\Setting;
 use Illuminate\View\View;
+use Illuminate\Support\Facades;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -22,6 +23,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+
+        if (!$this->app->runningInConsole()) {
+            $settings = Setting::all();
+            foreach ($settings as $setting) {
+                config(['app.' . $setting->key => $setting->value]);
+            }
+        }
         Facades\View::composer(['components.layouts.app'], function (View $view) {
             $view->with(
                 'menus',
