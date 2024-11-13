@@ -21,10 +21,10 @@
             <div class="text-center hero-content text-neutral-content">
                 <div>
                     <h1 class="mb-5 text-4xl font-bold sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl">
-                        Mon Titre
+                        {{ config('app.title')}}
                     </h1>
                     <p class="mb-5 text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl">
-                        Mon sous-tire
+                       {{ config('app.subTitle')}}
                     </p>
                 </div>
             </div>

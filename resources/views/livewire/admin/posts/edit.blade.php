@@ -60,6 +60,7 @@ class extends Component {
 			'meta_description' => 'required|max:160',
 			'meta_keywords'    => 'required|regex:/^[A-Za-z0-9-éèàù]{1,50}?(,[A-Za-z0-9-éèàù]{1,50})*$/',
 		]);
+	
 
 		if ($this->photo) {			
 			$date          = now()->format('Y/m');
@@ -100,7 +101,7 @@ class extends Component {
             <x-input type="text" wire:model="title" label="{{ __('Title') }}"
                 placeholder="{{ __('Enter the title') }}" wire:change="$refresh" />
             <x-input type="text" wire:model="slug" label="{{ __('Slug') }}" />
-			 <x-markdown-editor wire:model="body" label="{{ __('Content') }}" /> 
+			 <x-markdown-editor wire:model="body" label="{{ __('Content') }}" name="body"/> 
             {{-- <x-editor wire:model="body" label="{{ __('Content') }}" :config="config('tinymce.config')" --}}
                 {{-- folder="{{ 'photos/' . now()->format('Y/m') }}" /> --}}
             <x-card title="{{ __('SEO') }}" shadow separator>

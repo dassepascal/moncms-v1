@@ -94,6 +94,8 @@ new class extends Component {
                     <x-slot:menu>
                         @if ($post->pinned)
                             <x-badge value="{{ __('Pinned') }}" class="p-3 badge-warning" />
+                            @elseif($post->created_at->gt(now()->subWeeks(config('app.newPost'))))
+    <x-badge value="{{ __('New') }}" class="p-3 badge-success" />
                         @endif
                         @auth
                             @if ($post->is_favorited)
