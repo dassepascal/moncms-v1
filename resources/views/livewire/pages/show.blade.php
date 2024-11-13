@@ -41,7 +41,7 @@ new class extends Component {
     <div class="relative items-center w-full px-5 py-5 mx-auto prose md:px-12 max-w-7xl">
         {!! $page->body !!}
     </div>
-    <div class="flex justify-between">
+    {{-- <div class="flex justify-between">
         <p>@lang('By ') {{ $post->user->name }}</p>
         <em>
             @if ($commentsCount > 0)
@@ -59,6 +59,6 @@ new class extends Component {
                     wire:click="showComments" class="btn-outline" spinner />
             </div>
         @endif
-    </div>
+    </div> --}}
     
 </div>
